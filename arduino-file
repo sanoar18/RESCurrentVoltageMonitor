@@ -25,7 +25,7 @@ void loop() {
   // read the input on pin:
   int sensor1 = analogRead(A1);
   // Convert the analog reading:
-  float COUT = sensor1 * (1.36 / 1023.0);
+  float COUT = sensor1 * (1.47 / 1023.0);
   // print out the value:
   // Serial.println(COUT);
   // convert into the voltage:
@@ -39,7 +39,7 @@ void loop() {
   // read the input on pin:
   int sensor2 = analogRead(pin2);
   // Convert the analog reading:
-  float BOUT = sensor2 * (5.0 / 1023.0);
+  float BOUT = sensor2 * (1.47 / 1023.0);
   // print out the value:
   // Serial.println(BOUT);
   // convert into the voltage from the Arduino
@@ -53,7 +53,7 @@ void loop() {
   // read the input on pin A3:
   int sensor3 = analogRead(pin3);
   // Convert the analog reading:
-  float VIOUT = sensor3 * (1.36 / 1023.0);
+  float VIOUT = sensor3 * (1.47 / 1023.0);
   // print out the value:
   Serial.println(VIOUT);
   // convert into current:
