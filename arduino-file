@@ -1,0 +1,65 @@
+/*
+ * RES Current Voltage Monitor Code 
+ * by Arsh Noor Amin
+ * 
+ * for Arduino UNO
+*/
+
+void setup() {  
+  // initialize serial communication at 9600 bits per second:
+  Serial.begin(9600);
+  analogReference(EXTERNAL);
+  
+}
+
+void loop() {
+   // variables
+  int pin1 = A1;
+  int pin2 = A2;
+  int pin3 = A3;
+  float R1 = 2000000.0;
+  float R2 = 110000.0;
+  /*
+   * for COUT
+   */
+  // read the input on pin:
+  int sensor1 = analogRead(A1);
+  // Convert the analog reading:
+  float COUT = sensor1 * (1.36 / 1023.0);
+  // print out the value:
+  // Serial.println(COUT);
+  // convert into the voltage:
+  float CcIN = ((R1 + R2) / R2) * COUT;
+  // print out the value:
+  // Serial.println(CcIN);
+
+  /*
+   * for BOUT
+   */
+  // read the input on pin:
+  int sensor2 = analogRead(pin2);
+  // Convert the analog reading:
+  float BOUT = sensor2 * (5.0 / 1023.0);
+  // print out the value:
+  // Serial.println(BOUT);
+  // convert into the voltage from the Arduino
+  float BattIN = ((R1 + R2) / R2) * BOUT;
+  // print out the value:
+  // Serial.println(BattIN);
+
+  /*
+   * for VOUT
+   */
+  // read the input on pin A3:
+  int sensor3 = analogRead(pin3);
+  // Convert the analog reading:
+  float VIOUT = sensor3 * (1.36 / 1023.0);
+  // print out the value:
+  Serial.println(VIOUT);
+  // convert into current:
+  float VIAmps = sensor3 * 0.03325;
+  // print out the value:
+  Serial.println(VIAmps);
+
+  delay(1000);
+}
