@@ -4,62 +4,77 @@
  * 
  * for Arduino UNO
 */
+/*
+ * At 0A, the output is 11 mV
+ * 
+ * At 1A, the output is 66 mV
+ * 
+ * Software set COUT at 24V
+ * 
+ * 24V is 1.25 at arduino output
+ */
 
-void setup() {  
+void setup() {
   // initialize serial communication at 9600 bits per second:
   Serial.begin(9600);
-  analogReference(EXTERNAL);
   
 }
 
 void loop() {
-   // variables
-  int pin1 = A1;
-  int pin2 = A2;
-  int pin3 = A3;
-  float R1 = 2000000.0;
-  float R2 = 110000.0;
   /*
    * for COUT
    */
   // read the input on pin:
   int sensor1 = analogRead(A1);
   // Convert the analog reading:
-  float COUT = sensor1 * (1.36 / 1023.0);
+  float COUT = sensor1 * (1.47 / 1023.0);
   // print out the value:
-  // Serial.println(COUT);
+  //Serial.println(COUT);
   // convert into the voltage:
-  float CcIN = ((R1 + R2) / R2) * COUT;
+  float CcIN = (2110000.0 / 110000.0) * COUT;
   // print out the value:
-  // Serial.println(CcIN);
+  //Serial.println(CcIN);
 
   /*
    * for BOUT
    */
   // read the input on pin:
-  int sensor2 = analogRead(pin2);
+  int sensor2 = analogRead(A2);
   // Convert the analog reading:
   float BOUT = sensor2 * (5.0 / 1023.0);
   // print out the value:
-  // Serial.println(BOUT);
+  //Serial.print("BOUT: ");
+ // Serial.println(BOUT);
   // convert into the voltage from the Arduino
-  float BattIN = ((R1 + R2) / R2) * BOUT;
+  float BattIN = (2110000 / 110000) * BOUT;
   // print out the value:
-  // Serial.println(BattIN);
+ // Serial.print("BattIN: ");
+ // Serial.println(BattIN);
 
   /*
    * for VOUT
    */
   // read the input on pin A3:
-  int sensor3 = analogRead(pin3);
+  int sensor3 = analogRead(A3);
   // Convert the analog reading:
-  float VIOUT = sensor3 * (1.36 / 1023.0);
+  float VIOUT = sensor3 * 0.0049;
   // print out the value:
+  Serial.print("VIOUT: ");
   Serial.println(VIOUT);
-  // convert into current:
-  float VIAmps = sensor3 * 0.03325;
+  float deltaVIOUT = VIOUT - 0.011;
+  float VIAmps;
+  if (VIOUT <= 0.011) {
+    VIAmps = 0;
+  }
+  else {
+    //convert into current:
+    VIAmps = deltaVIOUT * (1 / 0.055);
+  }
   // print out the value:
+  Serial.print("VIAmps: ");
   Serial.println(VIAmps);
 
-  delay(1000);
+
+  delay(20);
+   
 }
